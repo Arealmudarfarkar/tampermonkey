@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  Trigger script based on URL hash change, send GUID to Azure, and dynamically display response in ShopVox
-// @author       YourName
+// @author       YourName2
 // @match        https://app.shopvox.com/*
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
