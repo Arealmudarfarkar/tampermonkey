@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         ShopVox URL Hash Trigger for Azure with Dynamic Response Display
+// @name         WorkOrder Info Change
 // @namespace    http://tampermonkey.net/
-// @version      1.2
-// @description  Trigger script based on URL hash change, send GUID to Azure, and dynamically display response in ShopVox
+// @version      1.3
+// @description  Trigger script based on URL hash change
 // @author       YourName3
 // @match        https://app.shopvox.com/*
 // @grant        GM_xmlhttpRequest
@@ -51,7 +51,7 @@
             var responseDiv = document.createElement('div');
             responseDiv.className = 'row';
             responseDiv.innerHTML = '<div class="col-sm-12 detail">' +
-                                    '<div class="title ng-binding">Customer Data' + data.test + '</div>' +
+                                    '<div class="title ng-binding">Additional Customer Data</div>' +
                                     '<div class="ng-scope simple-format">' + customerData + '</div>' +
                                     '</div>';
 
