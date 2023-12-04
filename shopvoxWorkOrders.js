@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ShopVox URL Hash Trigger for Azure with Dynamic Response Display
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Trigger script based on URL hash change, send GUID to Azure, and dynamically display response in ShopVox
 // @author       YourName2
 // @match        https://app.shopvox.com/*
