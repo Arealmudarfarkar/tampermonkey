@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WorkOrder Info Change
 // @namespace    http://tampermonkey.net/
-// @version      1.3
+// @version      1.4
 // @description  Trigger script based on URL hash change
 // @author       YourName3
 // @match        https://app.shopvox.com/*
@@ -13,28 +13,24 @@
 
     function processUrlHash() {
         var hash = window.location.hash;
+        var guidPattern = /pos\/(work_orders|quotes)\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i;
+        var match = guidPattern.exec(hash);
 
-        // Inline array of URL types
-        var urlTypes = ['quotes', 'work_orders', 'invoices'];
-
-        urlTypes.forEach(function(type) {
-            var pattern = new RegExp('pos/' + type + '/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})', 'i');
-            var match = pattern.exec(hash);
-            if (match) {
-                var guid = match[1];
-                console.log("GUID extracted for " + type + ": " + guid);
-                sendDataToAzure(guid, type); // Include the type in the function call
-            }
-        });
+        if (match) {
+            var type = match[1]; // "work_orders" or "quotes"
+            var guid = match[2];
+            console.log("Type: " + type + ", GUID: " + guid);
+            sendDataToAzure(type, guid);
+        }
     }
 
-    function sendDataToAzure(guid, type) {
-        var azureUrl = "https://prod-25.australiasoutheast.logic.azure.com:443/workflows/...";
-
+    function sendDataToAzure(type, guid) {
+        var azureUrl = "https://prod-25.australiasoutheast.logic.azure.com:443/workflows/272d34bf3ffa4e2a8dfb79c872771823/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4XHesCUHZdmpOiXVb9Zcv16-8tdGqMSz3oBV8bzVHpc";
+        
         GM_xmlhttpRequest({
             method: "POST",
             url: azureUrl,
-            data: JSON.stringify({ guid: guid, type: type }), // Include 'type' in the JSON data
+            data: JSON.stringify({ type: type, guid: guid }),
             headers: {
                 "Content-Type": "application/json"
             },
